@@ -4,20 +4,15 @@ from typing import List
 
 class Solution:
     def pivotIndex(self, nums: List[int]) -> int:
-        firstPointer, secondPointer = 0, len(nums) - 1
-        leftSum, rightSum = 0, 0
         result = -1
-        while firstPointer <= secondPointer:
-            if leftSum == rightSum and firstPointer == secondPointer:
-                return firstPointer
+        totalSum = sum(nums)
+        leftSum = 0
 
-            if leftSum <= rightSum:
-                leftSum += nums[firstPointer]
-                firstPointer += 1
-            else:
-                rightSum += nums[secondPointer]
-                secondPointer -= 1
-
+        for i in range(len(nums)):
+            leftSum += 0 if i == 0 else nums[i - 1]
+            rightSum = totalSum - nums[i] - leftSum
+            if rightSum == leftSum:
+                return i
         return result
 
 
