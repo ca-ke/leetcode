@@ -10,14 +10,28 @@ class ListNode:
 
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
-        if head is not None:
-            tail = None
-            while head is not None:
-                print(head.val)
-                head = head.next
-                tail = head
-            if tail is not None:
-                print(tail.val)
+        if head is None:
+            return False
+
+        slowPointer, fastPointer = head, head
+        while fastPointer and fastPointer.next:
+            fastPointer = fastPointer.next.next
+            slowPointer = slowPointer.next
+
+        prev = None
+        curr = slowPointer
+        while curr:
+            nextNode = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nextNode
+
+        firstHalf, secondHalf = head, prev
+        while secondHalf:
+            if firstHalf.val != secondHalf.val:
+                return False
+            firstHalf = firstHalf.next
+            secondHalf = secondHalf.next
         return True
 
 
